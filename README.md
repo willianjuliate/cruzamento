@@ -111,9 +111,4 @@ Analista de sistemas, programador Rust 🦀.
 Este projeto está sob a licença MIT. Sinta-se livre para usar, modificar e compartilhar. Só não tente colocar semáforo onde não precisa 😁
 
 ---
-
-<<<<<<< HEAD
-> *"Programar é transformar movimento em lógica."*
-=======
-> *"Programar é transformar movimento em lógica. Aqui, até o trânsito é código."* 🚦
->>>>>>> 02a411b81e1d9b638579038dbce410d7e877924d
+*"Programar é transformar movimento em lógica."*
