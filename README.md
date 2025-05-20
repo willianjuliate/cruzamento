@@ -112,4 +112,4 @@ Este projeto está sob a licença MIT. Sinta-se livre para usar, modificar e com
 
 ---
 
-> *"Programar é transformar movimento em lógica. Aqui, até o trânsito é código."* 🚦
+> *"Programar é transformar movimento em lógica."*
