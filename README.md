@@ -101,8 +101,8 @@ Este projeto se inspira no estudo de **Oliveira, Farges, Moreira e Kraus (2002)*
 
 ## 👨‍💻 Autor
 
-**Willian (Will)**
-Analista de sistemas, programador Rust e amante de simulações realistas que rodem limpas e rápidas como um carro com motor boxer.
+**Willian Juliate**
+Analista de sistemas, programador Rust 🦀.
 
 ---
 
@@ -112,4 +112,8 @@ Este projeto está sob a licença MIT. Sinta-se livre para usar, modificar e com
 
 ---
 
+<<<<<<< HEAD
 > *"Programar é transformar movimento em lógica."*
+=======
+> *"Programar é transformar movimento em lógica. Aqui, até o trânsito é código."* 🚦
+>>>>>>> 02a411b81e1d9b638579038dbce410d7e877924d
