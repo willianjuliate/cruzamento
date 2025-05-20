@@ -101,8 +101,8 @@ Este projeto se inspira no estudo de **Oliveira, Farges, Moreira e Kraus (2002)*
 
 ## 👨‍💻 Autor
 
-**Willian (Will)**
-Analista de sistemas, programador Rust e amante de simulações realistas que rodem limpas e rápidas como um carro com motor boxer.
+**Willian Juliate**
+Analista de sistemas, programador Rust 🦀.
 
 ---
 
