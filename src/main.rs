@@ -25,7 +25,7 @@ const ACELERACAO_MINIMA: f64 = -10.0;
 
 fn simula_carros(via_carro1: char, acel_carro1: f64, via_carro2: char, acel_carro2: f64) -> bool {
     // Descrição carro 1
-    let chassi1: i32 = 1111; // identificação de um carro
+    let mut placa1: String = String::from("ABC1234"); // identificação de um carro
     let via1: char = via_carro1; // via deste carro
     let _acel_max1 = ACELERACAO_MAXIMA; // metros por segundo ao quadrado 
     let _acel_min1 = ACELERACAO_MINIMA; // metros por segundo ao quadrado
@@ -36,7 +36,7 @@ fn simula_carros(via_carro1: char, acel_carro1: f64, via_carro2: char, acel_carr
     let acel_atual1: f64; // metros por segundo ao quadrado
 
     // Descrição carro 2
-    let chassi2: i32 = 2222; // identificação de um carro    
+    let mut placa2: String = String::from("xyz9876"); // identificação de um carro    
     let via2: char = via_carro2; // via deste carro        
     let _acel_max2 = ACELERACAO_MAXIMA; // metros por segundo ao quadrado                 
     let _acel_min2 = ACELERACAO_MINIMA; // metros por segundo ao quadrado                 
@@ -45,6 +45,18 @@ fn simula_carros(via_carro1: char, acel_carro1: f64, via_carro2: char, acel_carr
     let mut pos_atual2: f64 = -100.0; // metros do cruzamento            
     let mut vel_atual2: f64 = 0.0; // metros por segundo        
     let acel_atual2: f64; // metros por segundo ao quadrado
+
+    // verifica a validade das placas
+    placa1 = placa1.to_uppercase();
+    placa2 = placa2.to_uppercase();
+
+    if !valida_placa(&placa1) {
+        panic!("    Placa inválida: {placa1}");
+    }
+
+    if !valida_placa(&placa2) {
+        panic!("    Placa inválida: {placa2}");
+    }
 
     acel_atual1 = acel_carro1;
     acel_atual2 = acel_carro2;
@@ -62,15 +74,17 @@ fn simula_carros(via_carro1: char, acel_carro1: f64, via_carro2: char, acel_carr
         pos_atual1 = pos_atual1
             + vel_atual1 * (tickms / 1000.0)
             + acel_atual1 * (tickms / 1000.0) * (tickms / 1000.0) / 2.0;
-        
+
         vel_atual1 = vel_atual1 + acel_atual1 * (tickms / 1000.0);
 
         // Restrições carro 1
-        if pos_atual1 < old_position {  // Não anda pra trás
+        if pos_atual1 < old_position {
+            // Não anda pra trás
             pos_atual1 = old_position;
         }
 
-        if vel_atual1 < 0.0 {   // Não anda para tras
+        if vel_atual1 < 0.0 {
+            // Não anda para tras
             vel_atual1 = 0.0;
         }
 
@@ -78,70 +92,91 @@ fn simula_carros(via_carro1: char, acel_carro1: f64, via_carro2: char, acel_carr
             vel_atual1 = vel_max1; // Trava na velocidade máxima
         }
 
-        println!("Carro1 {} na posição {}{}, velocidade {}, aceleração {}",
-			chassi1, via1, pos_atual1, vel_atual1, acel_atual1);
-        
+        println!(
+            "Carro1 {} na posição {}{}, velocidade {}, aceleração {}",
+            placa1, via1, pos_atual1, vel_atual1, acel_atual1
+        );
+
         // Atualiza o carro 2
 
-		let old_position = pos_atual2;
+        let old_position = pos_atual2;
 
-		pos_atual2 = pos_atual2 + vel_atual2 * ( tickms / 1000.0 )+ acel_atual2 * (tickms/1000.0) * (tickms/1000.0) / 2.0;
-		vel_atual2 = vel_atual2 + acel_atual2 * ( tickms / 1000.0 );
-	
-		// Restrições carro 2
-		if pos_atual2 < old_position {		// Não anda para tras
-			pos_atual2 = old_position;
-		}
+        pos_atual2 = pos_atual2
+            + vel_atual2 * (tickms / 1000.0)
+            + acel_atual2 * (tickms / 1000.0) * (tickms / 1000.0) / 2.0;
+        vel_atual2 = vel_atual2 + acel_atual2 * (tickms / 1000.0);
 
-		if vel_atual2 < 0.0 {				// Não anda para tras
-			vel_atual2 = 0.0;
-		}
+        // Restrições carro 2
+        if pos_atual2 < old_position {
+            // Não anda para tras
+            pos_atual2 = old_position;
+        }
 
-		if vel_atual2 > vel_max2 {
-			vel_atual2 = vel_max2;			// Trava na velocidade máxima
-		}
+        if vel_atual2 < 0.0 {
+            // Não anda para tras
+            vel_atual2 = 0.0;
+        }
 
-		println!("Carro2 {} na posição {}{}, velocidade {}, aceleração {}",
-			chassi2, via2, pos_atual2, vel_atual2, acel_atual2);
+        if vel_atual2 > vel_max2 {
+            vel_atual2 = vel_max2; // Trava na velocidade máxima
+        }
+
+        println!(
+            "Carro2 {} na posição {}{}, velocidade {}, aceleração {}",
+            placa2, via2, pos_atual2, vel_atual2, acel_atual2
+        );
 
         // Detecta colisão na via H
         if via1 == 'H' && via2 == 'H' {
             if colisao_longitudinal(pos_atual1, comprimento1, pos_atual2) {
                 println!("Colisão na via H");
-				return true;
+                return true;
             }
         }
         // Detecta colisão na via V
-		if via1 == 'V'  &&  via2 == 'V' {
-			if colisao_longitudinal( pos_atual1, comprimento1, pos_atual2) {
-				println!("Colisão na via V");
-				return true;
-			}
-		}
+        if via1 == 'V' && via2 == 'V' {
+            if colisao_longitudinal(pos_atual1, comprimento1, pos_atual2) {
+                println!("Colisão na via V");
+                return true;
+            }
+        }
 
         // Detecta colisão no cruzamento
-		if via1 != via2 {
-			if dentro_cruzamento(pos_atual1, comprimento1, via1)  &&
-				dentro_cruzamento(pos_atual2, comprimento2, via2) {
-				println!("Colisão dentro do cruzamento");
-				return true;
-			}
-		}
+        if via1 != via2 {
+            if dentro_cruzamento(pos_atual1, comprimento1, via1)
+                && dentro_cruzamento(pos_atual2, comprimento2, via2)
+            {
+                println!("Colisão dentro do cruzamento");
+                return true;
+            }
+        }
 
         // Verifica se carro 1 saiu do sistema (falta a margem)
-		if pos_atual1 > comprimento1 + if via1 == 'H' { VIAV_LARGURA } else { VIAH_LARGURA }  {
-			break;
-		}	
+        if pos_atual1
+            > comprimento1
+                + if via1 == 'H' {
+                    VIAV_LARGURA
+                } else {
+                    VIAH_LARGURA
+                }
+        {
+            break;
+        }
 
-		// Verifica se carro 2 saiu do sistema (falta a margem)
-		if pos_atual2 > comprimento2 + if via2 == 'H' { VIAV_LARGURA } else { VIAH_LARGURA }  {
-			break;
-		}
-
+        // Verifica se carro 2 saiu do sistema (falta a margem)
+        if pos_atual2
+            > comprimento2
+                + if via2 == 'H' {
+                    VIAV_LARGURA
+                } else {
+                    VIAH_LARGURA
+                }
+        {
+            break;
+        }
     }
 
     return false;
-
 }
 
 // Colisão de dois carros ao longo da mesma via
@@ -150,14 +185,51 @@ fn colisao_longitudinal(posisao_frente: f64, comprimento: f64, posicao_atras: f6
 }
 
 // Detecta carro dentro do cruzamento
-fn dentro_cruzamento(posicao:f64, comprimento: f64, via: char) -> bool {
-    return posicao > 0.0 && posicao <= comprimento + if via == 'H' {VIAV_LARGURA} else {VIAH_LARGURA}
+fn dentro_cruzamento(posicao: f64, comprimento: f64, via: char) -> bool {
+    return posicao > 0.0
+        && posicao
+            <= comprimento
+                + if via == 'H' {
+                    VIAV_LARGURA
+                } else {
+                    VIAH_LARGURA
+                };
 }
 
+fn valida_placa(placa: &str) -> bool {
+    // Só aceita caracteres ASCII
+    if !placa.is_ascii() {
+        println!("Placa não é ASCII");
+        return false;
+    }
+
+    if placa.len() != 7 {
+        println!("Placa não tem o tamanho certo");
+        return false;
+    }
+
+    let inicio = &placa[0..3];
+    let fim = &placa[3..];
+
+    for x in inicio.chars() {
+        if !x.is_alphabetic() {
+            println!("Placa não tem letras no Início");
+            return false;
+        }
+    }
+
+    for x in fim.chars() {
+        if !x.is_ascii_digit() {
+            println!("Placa não tem digitos no final");
+            return false;
+        }
+    }
+
+    true
+}
 
 fn main() {
     println!("Inicio do programa");
-	simula_carros( 'H', ACELERACAO_MAXIMA/10.0, 'H', ACELERACAO_MAXIMA );
-	println!("Fim da simulação");
-
+    simula_carros('H', ACELERACAO_MAXIMA / 10.0, 'H', ACELERACAO_MAXIMA);
+    println!("Fim da simulação");
 }
