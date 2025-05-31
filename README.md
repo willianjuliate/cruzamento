@@ -22,17 +22,15 @@ Simulador em Rust de um cruzamento urbano com duas vias perpendiculares (horizon
 
 ---
 
-## 🧱 Estrutura do Projeto
+## 🧱 Estrutura do Projeto (Provisório)
 
 ```
 📦 cruzamento-automatico/
  ┣ 📜 Cargo.toml
  ┣ 📜 README.md
  ┣ 📁 src/
- ┃ ┣ 📜 main.rs         // ponto de entrada
- ┃ ┣ 📜 model.rs        // structs: Veiculo, Cruzamento, Via
- ┃ ┣ 📜 sim.rs          // lógica de simulação
- ┗ ┗ 📜 utils.rs        // funções auxiliares (ex: tempo, randomização)
+ ┃ ┣ 📜 main.rs
+ ┗ 
  
 ```
 
@@ -105,10 +103,3 @@ Este projeto se inspira no estudo de **Oliveira, Farges, Moreira e Kraus (2002)*
 Analista de sistemas, programador Rust 🦀.
 
 ---
-
-## 📜 Licença
-
-Este projeto está sob a licença MIT. Sinta-se livre para usar, modificar e compartilhar. Só não tente colocar semáforo onde não precisa 😁
-
----
-*"Programar é transformar movimento em lógica."*
